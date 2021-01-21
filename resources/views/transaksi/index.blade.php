@@ -17,19 +17,25 @@
                 </tr>
             </thead>
             <tbody>
-                @php
-                    $no = 1;
-                @endphp
-               @foreach($data_transaksi as $key => $value)
+                @if(count($data_transaksi) > 0)
+                    @php
+                        $no = 1;
+                    @endphp
+                    @foreach($data_transaksi as $key => $value)
+                        <tr>
+                            <td>{{ $no }}</td>
+                            <td>{{ $value->barang->nama_barang }}</td>
+                            <td>{{ \Carbon\Carbon::parse($value->tanggal_transaksi)->format('Y-m-d') }}</td>
+                        </tr>
+                    @php
+                        $no++;
+                    @endphp
+                    @endforeach
+                @else
                     <tr>
-                        <td>{{ $no }}</td>
-                        <td>{{ $value->barang->nama_barang }}</td>
-                        <td>{{ \Carbon\Carbon::parse($value->tanggal_transaksi)->format('Y-m-d') }}</td>
+                        <td colspan="3">Tidak ada data.</td>
                     </tr>
-                @php
-                    $no++;
-                @endphp
-               @endforeach
+                @endif
             </tbody>
         </table>
     </div>

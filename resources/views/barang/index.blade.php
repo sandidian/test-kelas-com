@@ -19,37 +19,44 @@
                 </tr>
             </thead>
             <tbody>
-                @php
-                    $no = 1;
-                @endphp
-               @foreach($data_barang as $key => $value)
+                @if(count($data_barang) > 0)
+                    @php
+                        $no = 1;
+                    @endphp
+                    @foreach($data_barang as $key => $value)
+                        <tr>
+                            <td>{{ $no }}</td>
+                            <td>{{ $value->nama_barang }}</td>
+                            <td>
+                                @if($value->status == 1)
+                                    Tersedia
+                                @else
+                                    Disewa
+                                @endif
+                            </td>
+                            <td>
+                                @if($value->status == 1)
+                                    <a href="{{ route('barang.transaksi',$value->id) }}" class="btn btn-danger">Sewa Barang</a>
+                                @else
+                                    <a href="{{ route('barang.change',$value->id) }}" class="btn btn-success">Ubah Status</a>
+                                    
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{ route('barang.update',$value->id) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('barang.delete',$value->id) }}" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin akan menghapus data ini? Semua data transaksi dan laporan dengan ID Barang = {{ $value->id }} akan dihapus juga.');">Delete</a>
+                            </td>
+                        </tr>
+                        @php
+                            $no++;
+                        @endphp
+                    @endforeach
+                @else
                     <tr>
-                        <td>{{ $no }}</td>
-                        <td>{{ $value->nama_barang }}</td>
-                        <td>
-                            @if($value->status == 1)
-                                Tersedia
-                            @else
-                                Disewa
-                            @endif
-                        </td>
-                        <td>
-                            @if($value->status == 1)
-                                <a href="{{ route('barang.transaksi',$value->id) }}" class="btn btn-danger">Sewa Barang</a>
-                            @else
-                                <a href="{{ route('barang.change',$value->id) }}" class="btn btn-success">Ubah Status</a>
-                                
-                            @endif
-                        </td>
-                        <td>
-                            <a href="{{ route('barang.update',$value->id) }}" class="btn btn-warning">Edit</a>
-                            <a href="{{ route('barang.delete',$value->id) }}" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin akan menghapus data ini? Semua data transaksi dan laporan dengan ID Barang = {{ $value->id }} akan dihapus juga.');">Delete</a>
-                        </td>
+                        <td colspan="3">Tidak ada data.</td>
                     </tr>
-                @php
-                    $no++;
-                @endphp
-               @endforeach
+                @endif
+            
             </tbody>
         </table>
     </div>
